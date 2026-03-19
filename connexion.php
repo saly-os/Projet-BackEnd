@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/includes/bootstrap.php';
 
-// La page de connexion est reservee aux utilisateurs non authentifies.
 if (isLoggedIn()) {
     redirect(url('/accueil.php'));
 }
@@ -13,7 +12,6 @@ $pageTitle = 'Connexion';
 $errors = [];
 
 if (isPost()) {
-    // Le login est nettoye, le mot de passe est lu tel quel pour la verification du hash.
     $login = trim((string) ($_POST['login'] ?? ''));
     $password = (string) ($_POST['mot_de_passe'] ?? '');
 
@@ -23,7 +21,6 @@ if (isPost()) {
     );
 
     if (!$errors && attemptLogin($login, $password)) {
-        // En cas de succes, l'utilisateur est redirige vers l'accueil.
         setFlash('success', 'Connexion reussie.');
         redirect(url('/accueil.php'));
     }
@@ -37,7 +34,6 @@ require __DIR__ . '/entete.php';
 ?>
 <section>
     <h2>Connexion</h2>
-    <!-- Le controle client est laisse au membre charge du JavaScript. -->
     <form method="post">
         <div>
             <label for="login">Login</label>

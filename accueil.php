@@ -5,7 +5,6 @@ declare(strict_types=1);
 require_once __DIR__ . '/includes/bootstrap.php';
 require_once __DIR__ . '/config/database.php';
 
-// Liste publique des articles avec filtre par categorie et pagination simple.
 $pdo = getPDO();
 $pageTitle = 'Accueil';
 $categoryId = filter_input(INPUT_GET, 'categorie', FILTER_VALIDATE_INT) ?: null;

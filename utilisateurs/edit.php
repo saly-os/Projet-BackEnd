@@ -5,11 +5,9 @@ declare(strict_types=1);
 require_once __DIR__ . '/../includes/bootstrap.php';
 requireRole('administrateur');
 
-// Modification d'un compte utilisateur existant.
 $pdo = getPDO();
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
-// Refuse les identifiants invalides.
 if (!$id) {
     setFlash('error', 'Utilisateur introuvable.');
     redirect(url('/utilisateurs/index.php'));
@@ -19,7 +17,6 @@ $stmt = $pdo->prepare('SELECT id, prenom, nom, login, role FROM utilisateurs WHE
 $stmt->execute(['id' => $id]);
 $user = $stmt->fetch();
 
-// L'utilisateur a modifier doit exister.
 if (!$user) {
     setFlash('error', 'Utilisateur introuvable.');
     redirect(url('/utilisateurs/index.php'));
@@ -30,7 +27,6 @@ $errors = [];
 $isEdit = true;
 
 if (isPost()) {
-    // On relit les nouvelles donnees depuis le formulaire.
     $data = [
         'prenom' => trim((string) ($_POST['prenom'] ?? '')),
         'nom' => trim((string) ($_POST['nom'] ?? '')),
@@ -51,7 +47,6 @@ if (isPost()) {
     }
 
     if (!$errors) {
-        // Le login doit rester unique, hors utilisateur courant.
         if (valueExists('utilisateurs', 'login', $data['login'], $id)) {
             $errors['login'] = 'Ce login est deja utilise.';
         }
@@ -59,7 +54,6 @@ if (isPost()) {
 
     if (!$errors) {
         if ($data['mot_de_passe'] !== '') {
-            // Si un mot de passe est saisi, on le remplace par un nouveau hash.
             $update = $pdo->prepare(
                 'UPDATE utilisateurs
                  SET prenom = :prenom, nom = :nom, login = :login, mot_de_passe = :mot_de_passe, role = :role
@@ -74,7 +68,6 @@ if (isPost()) {
                 'id' => $id,
             ]);
         } else {
-            // Sinon, on met a jour uniquement les informations de profil.
             $update = $pdo->prepare(
                 'UPDATE utilisateurs
                  SET prenom = :prenom, nom = :nom, login = :login, role = :role
@@ -93,7 +86,6 @@ if (isPost()) {
         redirect(url('/utilisateurs/index.php'));
     }
 
-    // Les valeurs postées sont reinjectees dans le formulaire en cas d'erreur.
     $user = array_merge($user, $data);
 }
 
