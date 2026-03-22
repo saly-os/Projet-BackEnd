@@ -54,12 +54,22 @@ $categories = $pdo->query('SELECT id, nom FROM categories ORDER BY nom')->fetchA
 
 require __DIR__ . '/entete.php';
 ?>
-<section>
-    <h2>Derniers articles</h2>
-    <form method="get">
-        <div>
+<section class="home-hero">
+    <div class="home-hero__content">
+        <p class="home-hero__tag">Xibarru Dakar</p>
+        <h2>Derniers articles</h2>
+        <p class="home-hero__text">
+            Decouvrez les dernieres actualites de Dakar, classees par categorie.
+
+        </p>
+    </div>
+</section>
+
+<section class="home-filter">
+    <form method="get" class="filter-form" id="filterForm">
+        <div class="filter-form__group">
             <label for="categorie">Filtrer par categorie</label>
-            <select name="categorie" id="categorie">
+            <select id="categorie" name="categorie">
                 <option value="">Toutes les categories</option>
                 <?php foreach ($categories as $categorie): ?>
                     <option value="<?= e((string) $categorie['id']) ?>" <?= $categoryId === (int) $categorie['id'] ? 'selected' : '' ?>>
@@ -68,41 +78,59 @@ require __DIR__ . '/entete.php';
                 <?php endforeach; ?>
             </select>
         </div>
-        <div>
-            <button type="submit">Filtrer</button>
-            <a href="<?= e(url('/accueil.php')) ?>">Reinitialiser</a>
+
+        <div class="filter-form__actions">
+            <button type="submit" class="btn btn--primary">Filtrer</button>
+            <a href="<?= e(url('/accueil.php')) ?>" class="btn btn--secondary">Reinitialiser</a>
         </div>
     </form>
 </section>
 
-<?php if (!$articles): ?>
-    <div>
-        <p>Aucun article trouve.</p>
+<section class="articles">
+    <div class="articles__header">
+        <h3>Articles recents</h3>
+        <p><?= e((string) $total) ?> articles trouves</p>
     </div>
-<?php endif; ?>
 
-<?php foreach ($articles as $article): ?>
-    <article>
-        <h3>
-            <a href="<?= e(url('/articles/voir.php?id=' . (string) $article['id'])) ?>"><?= e($article['titre']) ?></a>
-        </h3>
-        <p>
-            Categorie: <?= e($article['categorie']) ?> |
-            Auteur: <?= e($article['prenom'] . ' ' . $article['nom']) ?> |
-            Date: <?= e($article['date_publication']) ?>
-        </p>
-        <p><?= nl2br(e($article['description_courte'])) ?></p>
-    </article>
-<?php endforeach; ?>
+    <?php if (!$articles): ?>
+        <section class="empty-state">
+            <h3>Aucun article trouve</h3>
+            <p>Essaie une autre categorie ou ajoute du contenu depuis l'espace editeur.</p>
+        </section>
+    <?php else: ?>
+        <div class="articles__grid">
+            <?php foreach ($articles as $article): ?>
+                <article class="article-card">
+                    <div class="article-card__top">
+                        <span class="badge"><?= e($article['categorie']) ?></span>
+                        <span class="article-card__date"><?= e($article['date_publication']) ?></span>
+                    </div>
 
-<div>
-    <div>
-        <?php if ($pagination['has_prev']): ?>
-            <a href="<?= e(url('/accueil.php?page=' . $pagination['prev'] . ($categoryId ? '&categorie=' . $categoryId : ''))) ?>">Precedent</a>
-        <?php endif; ?>
-        <?php if ($pagination['has_next']): ?>
-            <a href="<?= e(url('/accueil.php?page=' . $pagination['next'] . ($categoryId ? '&categorie=' . $categoryId : ''))) ?>">Suivant</a>
-        <?php endif; ?>
-    </div>
-</div>
+                    <h3 class="article-card__title">
+                        <a href="<?= e(url('/articles/voir.php?id=' . (string) $article['id'])) ?>"><?= e($article['titre']) ?></a>
+                    </h3>
+
+                    <p class="article-card__author">Par <?= e($article['prenom'] . ' ' . $article['nom']) ?></p>
+
+                    <p class="article-card__excerpt">
+                        <?= nl2br(e($article['description_courte'])) ?>
+                    </p>
+
+                    <a href="<?= e(url('/articles/voir.php?id=' . (string) $article['id'])) ?>" class="article-card__link">Lire l'article</a>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</section>
+
+<nav class="pagination" aria-label="Pagination">
+    <?php if ($pagination['has_prev']): ?>
+        <a href="<?= e(url('/accueil.php?page=' . $pagination['prev'] . ($categoryId ? '&categorie=' . $categoryId : ''))) ?>" class="pagination__btn">Precedent</a>
+    <?php endif; ?>
+    <span class="pagination__info">Page <?= e((string) $pagination['current']) ?> sur <?= e((string) $pagination['last']) ?></span>
+    <?php if ($pagination['has_next']): ?>
+        <a href="<?= e(url('/accueil.php?page=' . $pagination['next'] . ($categoryId ? '&categorie=' . $categoryId : ''))) ?>" class="pagination__btn">Suivant</a>
+    <?php endif; ?>
+</nav>
+
 <?php require __DIR__ . '/includes/footer.php'; ?>
