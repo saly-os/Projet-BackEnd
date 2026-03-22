@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/bootstrap.php';
 
-// Liste publique des categories et compteur d'articles.
 $pdo = getPDO();
 $pageTitle = 'Categories';
 
-// La requete compte le nombre d'articles rattaches a chaque categorie.
 $categories = $pdo->query(
     'SELECT c.id, c.nom, COUNT(a.id) AS total_articles
      FROM categories c
@@ -22,7 +20,6 @@ require __DIR__ . '/../entete.php';
 <section>
     <h2>Categories</h2>
     <?php if (hasRole('editeur', 'administrateur')): ?>
-        <!-- Les visiteurs consultent seulement, les editeurs peuvent gerer. -->
         <p><a href="<?= e(url('/categories/create.php')) ?>">Nouvelle categorie</a></p>
     <?php endif; ?>
 </section>
@@ -38,7 +35,6 @@ require __DIR__ . '/../entete.php';
             </tr>
         </thead>
         <tbody>
-        <!-- Chaque categorie peut etre consultee et, selon le role, modifiee/supprimee. -->
         <?php foreach ($categories as $categorie): ?>
             <tr>
                 <td><?= e($categorie['nom']) ?></td>
@@ -47,7 +43,6 @@ require __DIR__ . '/../entete.php';
                 <?php if (hasRole('editeur', 'administrateur')): ?>
                     <td>
                         <a href="<?= e(url('/categories/edit.php?id=' . (string) $categorie['id'])) ?>">Modifier</a>
-                        <!-- La suppression est protegee par POST + CSRF. -->
                         <form method="post" action="<?= e(url('/categories/delete.php')) ?>" style="display:inline;">
                             <input type="hidden" name="id" value="<?= e((string) $categorie['id']) ?>">
                             <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">

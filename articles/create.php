@@ -5,16 +5,13 @@ declare(strict_types=1);
 require_once __DIR__ . '/../includes/bootstrap.php';
 requireRole('editeur', 'administrateur');
 
-// Creation d'un article par un utilisateur autorise.
 $pdo = getPDO();
 $pageTitle = 'Nouvel article';
 $errors = [];
 
-// Recupere les categories pour alimenter la liste deroulante.
 $categories = $pdo->query('SELECT id, nom FROM categories ORDER BY nom')->fetchAll();
 
 if (isPost()) {
-    // Nettoie les donnees recues avant validation.
     $data = [
         'titre' => trim((string) ($_POST['titre'] ?? '')),
         'description_courte' => trim((string) ($_POST['description_courte'] ?? '')),
@@ -30,14 +27,12 @@ if (isPost()) {
     ]);
 
     if (!$errors) {
-        // Verifie qu'on ne reference pas une categorie inexistante.
         if (!categoryExists((int) $data['categorie_id'])) {
             $errors['categorie_id'] = 'Categorie invalide.';
         }
     }
 
     if (!$errors) {
-        // L'auteur est l'utilisateur actuellement connecte.
         $stmt = $pdo->prepare(
             'INSERT INTO articles (titre, description_courte, contenu, categorie_id, auteur_id, date_publication)
              VALUES (:titre, :description_courte, :contenu, :categorie_id, :auteur_id, NOW())'
