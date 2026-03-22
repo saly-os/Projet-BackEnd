@@ -48,9 +48,8 @@ CREATE TABLE articles (
 -- ======================
 
 INSERT INTO utilisateurs (prenom, nom, login, mot_de_passe, role) VALUES
-('Admin', 'Principal', 'admin', '$2y$10$Lpgg6NwWk5WW8ZZOhCeyTuzdN04T2W6MOmu2q2jNWKh5EuhaVgumu', 'administrateur'),
-
-('Omar', 'XI', 'omarxi', '$2y$10$KwJeupQhi3v.BrDnaGX7YuwTB1c51Xn5lEnVYPaoIt68HVsNi9XQu', 'editeur');
+('Admin2', 'Principal', 'admin2', '$2y$10$f8Wa9Xl3.eS4gOJeC2WaPO1kPy5NF/U9PyPYeJN0jaJC/eD2BOwK6', 'administrateur'),
+('Saly', 'Editeur', 'saly', '$2y$10$7m9VM0XQluKQ/KD7to81Cu9y0i7F08ocdCQ2a/p6aFmslXTcN7x9i', 'editeur');
 
 -- ======================
 -- DONNÉES CATÉGORIES

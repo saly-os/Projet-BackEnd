@@ -6,7 +6,7 @@ declare(strict_types=1);
 </main>
 <footer class="site-footer">
     <div>
-        Backend PHP/PDO.
+        Projet back-end 2026.
     </div>
 </footer>
 <script src="<?= e(url('/main.js')) ?>"></script>
