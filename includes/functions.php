@@ -88,7 +88,7 @@ function requireRole(string ...$roles): void
 
     if (!hasRole(...$roles)) {
         $_SESSION['flash_error'] = 'Acces non autorise.';
-        redirect(url('/accueil.php'));
+        redirect(url('/connexion.php'));
     }
 }
 
@@ -168,7 +168,7 @@ function requireValidPostWithCsrf(): void
 {
     if (!isPost() || !verifyCsrfToken($_POST['csrf_token'] ?? null)) {
         setFlash('error', 'Requete invalide.');
-        redirect(url('/accueil.php'));
+        redirect(url('/connexion.php'));
     }
 }
 
