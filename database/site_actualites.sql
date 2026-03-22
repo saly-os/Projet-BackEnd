@@ -3,7 +3,9 @@ SET NAMES utf8mb4;
 
 -- Recréation de la base
 DROP DATABASE IF EXISTS site_actualites;
-CREATE DATABASE IF NOT EXISTS site_actualites;
+CREATE DATABASE IF NOT EXISTS site_actualites
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_general_ci;
 USE site_actualites;
 
 -- ======================
@@ -67,4 +69,5 @@ INSERT INTO articles (titre, description_courte, contenu, categorie_id, auteur_i
 ('Nouvelle application mobile', 'Une application innovante révolutionne le marché.', 'Contenu complet de l’article sur la technologie...', 1, 2),
 ('Conseils santé', 'Comment rester en bonne santé au quotidien.', 'Contenu détaillé sur la santé...', 2, 2),
 ('Résultats sportifs', 'Résumé du dernier match.', 'Contenu détaillé du match...', 3, 2),
-('L’éducation en évolution', 'Les nouvelles méthodes d’apprentissage.', 'Contenu sur l’éducation moderne...', 4, 2);
+('Tension Israël-Iran', 'Etat actuel du conflit','Influence des Etats-Unis', 4, 2),
+('L’éducation en évolution', 'Les nouvelles méthodes d’apprentissage.', 'Contenu sur l’éducation moderne...', 5, 2);
