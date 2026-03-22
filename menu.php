@@ -18,6 +18,9 @@ declare(strict_types=1);
             <li>
                 <a href="<?= e(url('/articles/index.php')) ?>" class="site-nav__link">Articles</a>
             </li>
+            <li>
+                <a href="<?= e(url('/articles/create.php')) ?>" class="site-nav__link">Publier</a>
+            </li>
         <?php endif; ?>
 
         <?php if (hasRole('administrateur')): ?>

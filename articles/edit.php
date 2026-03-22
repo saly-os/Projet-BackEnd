@@ -22,6 +22,13 @@ if (!$article) {
     redirect(url('/articles/index.php'));
 }
 
+$isAdmin = hasRole('administrateur');
+$user = currentUser();
+if (!$isAdmin && (int) $article['auteur_id'] !== (int) $user['id']) {
+    setFlash('error', 'Vous ne pouvez modifier que vos propres articles.');
+    redirect(url('/articles/index.php'));
+}
+
 $pageTitle = 'Modifier un article';
 $errors = [];
 
