@@ -204,7 +204,9 @@ p {
 .filter-form,
 .article-card,
 .login-card,
-.message-box {
+.message-box,
+.content-card,
+.form-card {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -276,6 +278,20 @@ p {
 /* Formulaires */
 .form-group {
   margin-bottom: 18px;
+}
+
+.form-card {
+  padding: 24px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.form-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .form-group label {
@@ -538,6 +554,87 @@ p {
   background: #cf856d;
 }
 
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--danger);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-danger:hover {
+  background: #a04141;
+}
+
+.page-actions {
+  margin-top: 14px;
+}
+
+.table-wrap,
+.content-card {
+  padding: 22px;
+}
+
+.table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-wrap th,
+.table-wrap td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table-wrap thead th {
+  color: var(--muted);
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.table-wrap tbody tr:hover {
+  background: rgba(237, 218, 203, 0.28);
+}
+
+.table-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.table-actions form {
+  margin: 0;
+}
+
+.action-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--cream);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.action-link:hover {
+  background: #e4cfbf;
+}
+
 /* Deconnexion */
 .logout-page {
   max-width: 760px;
@@ -641,5 +738,19 @@ p {
 
   .filter-form__actions {
     width: 100%;
+  }
+
+  .form-grid--two {
+    grid-template-columns: 1fr;
+  }
+
+  .table-actions {
+    align-items: stretch;
+  }
+
+  .action-link,
+  .btn-danger {
+    width: 100%;
+    text-align: center;
   }
 }
