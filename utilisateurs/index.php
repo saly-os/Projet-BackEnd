@@ -14,9 +14,9 @@ require __DIR__ . '/../entete.php';
 ?>
 <section>
     <h2>Utilisateurs</h2>
-    <p><a href="<?= e(url('/utilisateurs/create.php')) ?>">Nouvel utilisateur</a></p>
+    <p class="page-actions"><a href="<?= e(url('/utilisateurs/create.php')) ?>" class="btn btn--primary">Nouvel utilisateur</a></p>
 </section>
-<section>
+<section class="content-card table-wrap">
     <table>
         <thead>
             <tr>
@@ -34,13 +34,13 @@ require __DIR__ . '/../entete.php';
                 <td><?= e($user['nom']) ?></td>
                 <td><?= e($user['login']) ?></td>
                 <td><?= e($user['role']) ?></td>
-                <td>
-                    <a href="<?= e(url('/utilisateurs/edit.php?id=' . (string) $user['id'])) ?>">Modifier</a>
+                <td class="table-actions">
+                    <a href="<?= e(url('/utilisateurs/edit.php?id=' . (string) $user['id'])) ?>" class="action-link">Modifier</a>
                     <?php if ((int) $user['id'] !== (int) currentUser()['id']): ?>
                         <form method="post" action="<?= e(url('/utilisateurs/delete.php')) ?>" style="display:inline;">
                             <input type="hidden" name="id" value="<?= e((string) $user['id']) ?>">
                             <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
-                            <button type="submit" onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</button>
+                            <button type="submit" class="btn-danger" onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</button>
                         </form>
                     <?php endif; ?>
                 </td>

@@ -23,9 +23,9 @@ require __DIR__ . '/../entete.php';
 ?>
 <section>
     <h2>Articles</h2>
-    <p><a href="<?= e(url('/articles/create.php')) ?>">Nouvel article</a></p>
+    <p class="page-actions"><a href="<?= e(url('/articles/create.php')) ?>" class="btn btn--primary">Nouvel article</a></p>
 </section>
-<section>
+<section class="content-card table-wrap">
     <table>
         <thead>
             <tr>
@@ -44,14 +44,14 @@ require __DIR__ . '/../entete.php';
                 <td><?= e($article['categorie']) ?></td>
                 <td><?= e($article['prenom'] . ' ' . $article['nom']) ?></td>
                 <td><?= e($article['date_publication']) ?></td>
-                <td>
-                    <a href="<?= e(url('/articles/voir.php?id=' . (string) $article['id'])) ?>">Voir</a>
+                <td class="table-actions">
+                    <a href="<?= e(url('/articles/voir.php?id=' . (string) $article['id'])) ?>" class="action-link">Voir</a>
                     <?php if ($canManage): ?>
-                        <a href="<?= e(url('/articles/edit.php?id=' . (string) $article['id'])) ?>">Modifier</a>
+                        <a href="<?= e(url('/articles/edit.php?id=' . (string) $article['id'])) ?>" class="action-link">Modifier</a>
                         <form method="post" action="<?= e(url('/articles/delete.php')) ?>" style="display:inline;">
                             <input type="hidden" name="id" value="<?= e((string) $article['id']) ?>">
                             <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
-                            <button type="submit" onclick="return confirm('Supprimer cet article ?');">Supprimer</button>
+                            <button type="submit" class="btn-danger" onclick="return confirm('Supprimer cet article ?');">Supprimer</button>
                         </form>
                     <?php endif; ?>
                 </td>
