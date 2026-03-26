@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Formulaire mutualise pour la creation et la modification d'article.
 $article = $article ?? [
     'titre' => old('titre'),
     'description_courte' => old('description_courte'),
@@ -10,27 +9,23 @@ $article = $article ?? [
     'categorie_id' => old('categorie_id'),
 ];
 ?>
-<form method="post">
-    <div>
-        <!-- Titre principal de l'article. -->
+<form method="post" class="form-card form-grid">
+    <div class="form-group">
         <label for="titre">Titre</label>
         <input type="text" id="titre" name="titre" value="<?= e((string) $article['titre']) ?>">
-        <?php if (isset($errors['titre'])): ?><p><?= e($errors['titre']) ?></p><?php endif; ?>
+        <?php if (isset($errors['titre'])): ?><p class="form-error"><?= e($errors['titre']) ?></p><?php endif; ?>
     </div>
-    <div>
-        <!-- Resume court affiche dans la liste publique. -->
+    <div class="form-group">
         <label for="description_courte">Description courte</label>
         <textarea id="description_courte" name="description_courte"><?= e((string) $article['description_courte']) ?></textarea>
-        <?php if (isset($errors['description_courte'])): ?><p><?= e($errors['description_courte']) ?></p><?php endif; ?>
+        <?php if (isset($errors['description_courte'])): ?><p class="form-error"><?= e($errors['description_courte']) ?></p><?php endif; ?>
     </div>
-    <div>
-        <!-- Contenu integral visible dans la page de detail. -->
+    <div class="form-group">
         <label for="contenu">Contenu</label>
         <textarea id="contenu" name="contenu"><?= e((string) $article['contenu']) ?></textarea>
-        <?php if (isset($errors['contenu'])): ?><p><?= e($errors['contenu']) ?></p><?php endif; ?>
+        <?php if (isset($errors['contenu'])): ?><p class="form-error"><?= e($errors['contenu']) ?></p><?php endif; ?>
     </div>
-    <div>
-        <!-- La categorie est choisie parmi les categories existantes en base. -->
+    <div class="form-group">
         <label for="categorie_id">Categorie</label>
         <select id="categorie_id" name="categorie_id">
             <option value="">Choisir une categorie</option>
@@ -40,8 +35,7 @@ $article = $article ?? [
                 </option>
             <?php endforeach; ?>
         </select>
-        <?php if (isset($errors['categorie_id'])): ?><p><?= e($errors['categorie_id']) ?></p><?php endif; ?>
+        <?php if (isset($errors['categorie_id'])): ?><p class="form-error"><?= e($errors['categorie_id']) ?></p><?php endif; ?>
     </div>
-    <!-- Le bouton est partage entre creation et modification. -->
-    <button type="submit">Enregistrer</button>
+    <button type="submit" class="btn-submit">Enregistrer</button>
 </form>

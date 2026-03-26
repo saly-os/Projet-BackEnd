@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../init.php';
 requireRole('administrateur');
 
-// Creation d'un nouveau compte par l'administrateur.
 $pageTitle = 'Nouvel utilisateur';
 $errors = [];
 
 if (isPost()) {
-    // Lecture de toutes les donnees saisies dans le formulaire.
     $data = [
         'prenom' => trim((string) ($_POST['prenom'] ?? '')),
         'nom' => trim((string) ($_POST['nom'] ?? '')),
@@ -32,14 +30,12 @@ if (isPost()) {
     }
 
     if (!$errors) {
-        // Le login doit etre unique pour garantir une authentification fiable.
         if (valueExists('utilisateurs', 'login', $data['login'])) {
             $errors['login'] = 'Ce login est deja utilise.';
         }
     }
 
     if (!$errors) {
-        // Le mot de passe est hache avant stockage en base.
         $stmt = getPDO()->prepare(
             'INSERT INTO utilisateurs (prenom, nom, login, mot_de_passe, role)
              VALUES (:prenom, :nom, :login, :mot_de_passe, :role)'

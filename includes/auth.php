@@ -5,7 +5,6 @@ declare(strict_types=1);
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/functions.php';
 
-// Tente une authentification avec verification du mot de passe hache.
 function attemptLogin(string $login, string $password): bool
 {
     $pdo = getPDO();
@@ -30,7 +29,6 @@ function attemptLogin(string $login, string $password): bool
     return true;
 }
 
-// Vide completement la session utilisateur.
 function logoutUser(): void
 {
     $_SESSION = [];

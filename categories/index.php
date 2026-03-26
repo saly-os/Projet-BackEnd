@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../init.php';
 
-// Liste publique des categories et compteur d'articles.
 $pdo = getPDO();
 $pageTitle = 'Categories';
 
-// La requete compte le nombre d'articles rattaches a chaque categorie.
 $categories = $pdo->query(
     'SELECT c.id, c.nom, COUNT(a.id) AS total_articles
      FROM categories c
@@ -22,12 +20,11 @@ require __DIR__ . '/../entete.php';
 <section>
     <h2>Categories</h2>
     <?php if (hasRole('editeur', 'administrateur')): ?>
-        <!-- Les visiteurs consultent seulement, les editeurs peuvent gerer. -->
-        <p><a href="<?= e(url('/categories/create.php')) ?>">Nouvelle categorie</a></p>
+        <p class="page-actions"><a href="<?= e(url('/categories/create.php')) ?>" class="btn btn--primary">Nouvelle categorie</a></p>
     <?php endif; ?>
 </section>
 
-<section>
+<section class="content-card table-wrap">
     <table>
         <thead>
             <tr>
@@ -38,20 +35,18 @@ require __DIR__ . '/../entete.php';
             </tr>
         </thead>
         <tbody>
-        <!-- Chaque categorie peut etre consultee et, selon le role, modifiee/supprimee. -->
         <?php foreach ($categories as $categorie): ?>
             <tr>
                 <td><?= e($categorie['nom']) ?></td>
                 <td><?= e((string) $categorie['total_articles']) ?></td>
-                <td><a href="<?= e(url('/accueil.php?categorie=' . (string) $categorie['id'])) ?>">Voir les articles</a></td>
+                <td><a href="<?= e(url('/accueil.php?categorie=' . (string) $categorie['id'])) ?>" class="action-link">Voir les articles</a></td>
                 <?php if (hasRole('editeur', 'administrateur')): ?>
-                    <td>
-                        <a href="<?= e(url('/categories/edit.php?id=' . (string) $categorie['id'])) ?>">Modifier</a>
-                        <!-- La suppression est protegee par POST + CSRF. -->
+                    <td class="table-actions">
+                        <a href="<?= e(url('/categories/edit.php?id=' . (string) $categorie['id'])) ?>" class="action-link">Modifier</a>
                         <form method="post" action="<?= e(url('/categories/delete.php')) ?>" style="display:inline;">
                             <input type="hidden" name="id" value="<?= e((string) $categorie['id']) ?>">
                             <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
-                            <button type="submit" onclick="return confirm('Supprimer cette categorie ?');">Supprimer</button>
+                            <button type="submit" class="btn-danger" onclick="return confirm('Supprimer cette categorie ?');">Supprimer</button>
                         </form>
                     </td>
                 <?php endif; ?>

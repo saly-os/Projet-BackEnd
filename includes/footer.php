@@ -4,11 +4,11 @@ declare(strict_types=1);
 ?>
     </div>
 </main>
-<footer>
+<footer class="site-footer">
     <div>
-        <!-- Pied de page minimal: pas de travail frontend ici. -->
-        Backend PHP/PDO.
+        Projet back-end 2026.
     </div>
 </footer>
+<script src="<?= e(url('/main.js')) ?>"></script>
 </body>
 </html>
