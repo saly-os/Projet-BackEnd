@@ -33,22 +33,3 @@ require __DIR__ . '/../entete.php';
     <?php require __DIR__ . '/form.php'; ?>
 </section>
 <?php require __DIR__ . '/../includes/footer.php'; ?>
-
-<form method="post" data-validate="true" novalidate>
-    <div class="form-group">
-        <label for="nom">Nom</label>
-        <input
-            type="text"
-            id="nom"
-            name="nom"
-            data-required="true"
-            data-label="nom"
-            data-error="nomError"
-            placeholder="Entrez le nom de la categorie"
-        >
-        <p class="form-error" id="nomError"></p>
-    </div>
-
-    <button type="submit" class="btn btn--primary">Creer la categorie</button>
-</form>
-
