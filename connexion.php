@@ -42,37 +42,43 @@ require __DIR__ . '/entete.php';
     </div>
 
     <div class="login-card">
-        <form method="post" class="login-form" id="loginForm" novalidate>
-            <div class="form-group">
-                <label for="login">Login</label>
-                <input
-                    type="text"
-                    id="login"
-                    name="login"
-                    value="<?= e(old('login')) ?>"
-                    placeholder="Entrez votre login"
-                >
-                <p class="form-error" id="loginError"><?= isset($errors['login']) ? e($errors['login']) : '' ?></p>
-            </div>
+        <form method="post" class="login-form" id="loginForm" data-validate="true" novalidate>
+    <div class="form-group">
+        <label for="login">Login</label>
+        <input
+            type="text"
+            id="login"
+            name="login"
+            data-required="true"
+            data-label="login"
+            data-error="loginError"
+            placeholder="Entrez votre login"
+        >
+        <p class="form-error" id="loginError"></p>
+    </div>
 
-            <div class="form-group">
-                <label for="mot_de_passe">Mot de passe</label>
-                <div class="password-field">
-                    <input
-                        type="password"
-                        id="mot_de_passe"
-                        name="mot_de_passe"
-                        placeholder="Entrez votre mot de passe"
-                    >
-                    <button type="button" class="toggle-password" id="togglePassword">Afficher</button>
-                </div>
-                <p class="form-error" id="passwordError"><?= isset($errors['mot_de_passe']) ? e($errors['mot_de_passe']) : '' ?></p>
-            </div>
+    <div class="form-group">
+        <label for="mot_de_passe">Mot de passe</label>
+        <div class="password-field">
+            <input
+                type="password"
+                id="mot_de_passe"
+                name="mot_de_passe"
+                data-required="true"
+                data-label="mot de passe"
+                data-error="passwordError"
+                placeholder="Entrez votre mot de passe"
+            >
+            <button type="button" class="toggle-password" id="togglePassword">Afficher</button>
+        </div>
+        <p class="form-error" id="passwordError"></p>
+    </div>
 
-            <p class="form-error form-error--global" id="authError"><?= isset($errors['auth']) ? e($errors['auth']) : '' ?></p>
+    <p class="form-error form-error--global" id="authError"></p>
 
-            <button type="submit" class="btn-submit">Se connecter</button>
-        </form>
+    <button type="submit" class="btn-submit">Se connecter</button>
+</form>
+
     </div>
 </section>
 

@@ -17,24 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    const loginForm = document.getElementById("loginForm");
-    const loginInput = document.getElementById("login");
-    const passwordInput = document.getElementById("mot_de_passe");
-    const loginError = document.getElementById("loginError");
-    const passwordError = document.getElementById("passwordError");
     const togglePassword = document.getElementById("togglePassword");
-
-    function setError(input, errorElement, message) {
-        if (!input || !errorElement) return;
-        input.classList.add("input-error");
-        errorElement.textContent = message;
-    }
-
-    function clearError(input, errorElement) {
-        if (!input || !errorElement) return;
-        input.classList.remove("input-error");
-        errorElement.textContent = "";
-    }
+    const passwordInput = document.getElementById("mot_de_passe");
 
     if (togglePassword && passwordInput) {
         togglePassword.addEventListener("click", function () {
@@ -44,26 +28,59 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    if (loginForm && loginInput && passwordInput) {
-        loginForm.addEventListener("submit", function (event) {
+    const forms = document.querySelectorAll("form[data-validate='true']");
+
+    forms.forEach(function (form) {
+        const fields = form.querySelectorAll("[data-required='true']");
+
+        fields.forEach(function (field) {
+            field.addEventListener("input", function () {
+                validateField(field);
+            });
+
+            field.addEventListener("blur", function () {
+                validateField(field);
+            });
+        });
+
+        form.addEventListener("submit", function (event) {
             let isValid = true;
 
-            clearError(loginInput, loginError);
-            clearError(passwordInput, passwordError);
-
-            if (!loginInput.value.trim()) {
-                setError(loginInput, loginError, "Le login est obligatoire.");
-                isValid = false;
-            }
-
-            if (!passwordInput.value.trim()) {
-                setError(passwordInput, passwordError, "Le mot de passe est obligatoire.");
-                isValid = false;
-            }
+            fields.forEach(function (field) {
+                if (!validateField(field)) {
+                    isValid = false;
+                }
+            });
 
             if (!isValid) {
                 event.preventDefault();
             }
         });
+    });
+
+    function validateField(field) {
+        const value = field.value.trim();
+        const label = field.dataset.label || "ce champ";
+        const errorId = field.dataset.error;
+        const errorElement = errorId ? document.getElementById(errorId) : null;
+        let message = "";
+
+        if (!value) {
+            message = "Le champ " + label + " est obligatoire.";
+        }
+
+        if (message) {
+            field.classList.add("input-error");
+            if (errorElement) {
+                errorElement.textContent = message;
+            }
+            return false;
+        }
+
+        field.classList.remove("input-error");
+        if (errorElement) {
+            errorElement.textContent = "";
+        }
+        return true;
     }
 });
